@@ -1,5 +1,7 @@
 import 'package:favy_place/providers/user_places.dart';
+import 'package:favy_place/widgets/image_input.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:io';
 
 // import 'package:favy_place/providers/user_places.dart';
 import 'package:flutter/material.dart';
@@ -15,27 +17,34 @@ class _AddPlaceState extends ConsumerState<AddPlaceScreen> {
   final _formKey = GlobalKey<FormState>(); //? Must have
   String _enteredTitle = "";
 
+  File? _selectedImage;
+
   void _savePlace() {
     bool validation = _formKey.currentState!.validate(); //* Must have
 
-    if (validation) {
-      _formKey.currentState!.save();
-      //* basically save all form (do what the onSaved do on each form)
-
-      ref.read(userPlacesNotifierProvider.notifier).addPlace(_enteredTitle);
-      //? save the _enteredTitle from above into the provider
-
-      //Todo add http request _isSending stuffs
-      Navigator.of(context).pop();
-      //*context is avaible in state class/ consumer state class
+    if (!validation || _selectedImage == null) {
+      return;
     }
+    _formKey.currentState!.save();
+    //* basically save all form (do what the onSaved do on each form)
+
+    ref
+        .read(userPlacesNotifierProvider.notifier)
+        .addPlace(_enteredTitle, _selectedImage!);
+    //? save the _enteredTitle from above into the provider
+
+    //Todo add http request _isSending stuffs
+    // print("TESTING");
+
+    Navigator.of(context).pop();
+    //*context is avaible in state class/ consumer state class
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add a new favorite place!"),
+        title: const Text("Add your new favorite place!"),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12.0),
@@ -66,6 +75,14 @@ class _AddPlaceState extends ConsumerState<AddPlaceScreen> {
                   setState(() {
                     _enteredTitle = value!;
                   });
+                },
+              ),
+              const SizedBox(
+                height: 6,
+              ),
+              ImageInput(
+                onPickImage: (image) {
+                  _selectedImage = image;
                 },
               ),
               const SizedBox(

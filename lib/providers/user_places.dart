@@ -1,5 +1,6 @@
 import 'package:favy_place/models/place.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:io';
 
 class UserPlacesNotifier extends Notifier<List<Place>> {
   @override
@@ -7,8 +8,8 @@ class UserPlacesNotifier extends Notifier<List<Place>> {
     return [];
   }
 
-  void addPlace(String title) {
-    final newPlace = Place(title: title);
+  void addPlace(String title, File image) {
+    final newPlace = Place(title: title, image: image);
     state = [
       newPlace,
       ...state

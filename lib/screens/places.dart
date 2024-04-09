@@ -11,6 +11,7 @@ class PlacesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final places = ref.watch(userPlacesNotifierProvider);
+    //todo implement .select for my provider???
 
     void addNewPlace() {
       Navigator.of(context).push(
