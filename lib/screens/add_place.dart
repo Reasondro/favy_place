@@ -12,21 +12,23 @@ class AddPlaceScreen extends ConsumerStatefulWidget {
 }
 
 class _AddPlaceState extends ConsumerState<AddPlaceScreen> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>(); //? Must have
   String _enteredTitle = "";
 
   void _savePlace() {
-    bool validation = _formKey.currentState!.validate();
+    bool validation = _formKey.currentState!.validate(); //* Must have
 
     if (validation) {
-      _formKey.currentState!
-          .save(); //* basically save all form (do what the onSaved do on each form)
-      ref.read(userPlacesNotifierProvider.notifier).addPlace(
-          _enteredTitle); //? save the _enteredTitle from above into the provider
+      _formKey.currentState!.save();
+      //* basically save all form (do what the onSaved do on each form)
+
+      ref.read(userPlacesNotifierProvider.notifier).addPlace(_enteredTitle);
+      //? save the _enteredTitle from above into the provider
+
       //Todo add http request _isSending stuffs
+      Navigator.of(context).pop();
       //*context is avaible in state class/ consumer state class
     }
-    Navigator.of(context).pop();
   }
 
   @override
@@ -71,7 +73,7 @@ class _AddPlaceState extends ConsumerState<AddPlaceScreen> {
               ),
               ElevatedButton.icon(
                 onPressed: () {
-                  _savePlace();
+                  _savePlace(); //? save the whole thing
                 },
                 icon: const Icon(Icons.add),
                 label: const Text("Add Place"),

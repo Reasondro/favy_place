@@ -1,4 +1,5 @@
 import 'package:favy_place/models/place.dart';
+import 'package:favy_place/screens/place_detail.dart';
 import 'package:flutter/material.dart';
 
 class PlacesList extends StatelessWidget {
@@ -28,6 +29,10 @@ class PlacesList extends StatelessWidget {
               .copyWith(color: Theme.of(context).colorScheme.onBackground),
         ),
         trailing: Text("Image of ${places[index].title}"),
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (ctx) => PlaceDetailScreen(place: places[index])));
+        },
       ),
     );
   }
