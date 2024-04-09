@@ -1,17 +1,21 @@
+import 'package:favy_place/providers/user_places.dart';
 import 'package:favy_place/screens/add_place.dart';
 import 'package:favy_place/widgets/places_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PlacesScreen extends StatefulWidget {
+class PlacesScreen extends ConsumerStatefulWidget
+//TODO change to ConsumerWidget
+{
   const PlacesScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<PlacesScreen> createState() {
     return _PlacesState();
   }
 }
 
-class _PlacesState extends State<PlacesScreen> {
+class _PlacesState extends ConsumerState<PlacesScreen> {
   void _addPlace() {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -22,6 +26,7 @@ class _PlacesState extends State<PlacesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final places = ref.watch(userPlacesNotifierProvider);
     return Scaffold(
         appBar: AppBar(
           title: const Text("Your Places"),
@@ -34,6 +39,8 @@ class _PlacesState extends State<PlacesScreen> {
             )
           ],
         ),
-        body: const PlacesList(places: [], ));
+        body: PlacesList(
+          places: places, //? can do the riverpod here or in places list
+        ));
   }
 }

@@ -15,10 +15,11 @@ class PlacesList extends StatelessWidget {
                   color: Theme.of(context).colorScheme.onBackground)));
     }
 
+    //? bawah ini else ny basically
     return ListView.builder(
       itemCount: places.length,
       itemBuilder: (ctx, index) => ListTile(
-        leading: Text("${index + 1}"),
+        leading: const Icon(Icons.location_on), //? work on this later
         title: Text(
           places[index].title,
           style: Theme.of(context)
@@ -26,7 +27,7 @@ class PlacesList extends StatelessWidget {
               .titleMedium!
               .copyWith(color: Theme.of(context).colorScheme.onBackground),
         ),
-        trailing: Text("Image No.${index + 1}"),
+        trailing: Text("Image of ${places[index].title}"),
       ),
     );
   }
