@@ -27,10 +27,11 @@ class _ImageInputState extends State<ImageInput> {
     if (pickedImage == null) {
       return;
     }
-    print(pickedImage.path);
+    // print(pickedImage.path);
     setState(() {
       //? SET STATE IS CRUCIAL TO TELL THE UI TO BE UPDATED
-      _selectedImage = File(pickedImage.path);
+      _selectedImage = File(pickedImage
+          .path); //*IMPORTANT to set the image path from the picked image
     });
     widget.onPickImage(_selectedImage!);
   }

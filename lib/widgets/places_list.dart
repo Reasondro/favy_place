@@ -21,7 +21,7 @@ class PlacesList extends StatelessWidget {
       itemCount: places.length,
       itemBuilder: (ctx, index) => ListTile(
         leading: CircleAvatar(
-          radius: 26,
+          radius: 20,
           backgroundImage: FileImage(places[index].image),
         ),
         title: Text(
@@ -31,7 +31,7 @@ class PlacesList extends StatelessWidget {
               .titleMedium!
               .copyWith(color: Theme.of(context).colorScheme.onBackground),
         ),
-        trailing: Text("Image of ${places[index].title}"),
+        trailing: Text("${places[index].title} address"),
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (ctx) => PlaceDetailScreen(place: places[index])));
