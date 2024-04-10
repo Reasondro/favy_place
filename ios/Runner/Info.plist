@@ -3,6 +3,9 @@
 <plist version="1.0">
 <dict>
 	<!-- ! MUST ADD THIS -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>The location for your favorite place</string>
+	<!-- ! MUST ADD THIS -->
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Pick your favorite place image.</string>
 	<key>NSCameraUsageDescription</key>

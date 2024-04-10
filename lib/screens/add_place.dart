@@ -1,5 +1,6 @@
 import 'package:favy_place/providers/user_places.dart';
 import 'package:favy_place/widgets/image_input.dart';
+import 'package:favy_place/widgets/location_input.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:io';
 
@@ -85,6 +86,10 @@ class _AddPlaceState extends ConsumerState<AddPlaceScreen> {
                   _selectedImage = image;
                 },
               ),
+              const SizedBox(
+                height: 12,
+              ),
+              LocationInput(),
               const SizedBox(
                 height: 16,
               ),
