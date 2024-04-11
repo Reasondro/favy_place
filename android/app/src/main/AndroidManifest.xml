@@ -1,8 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
     <application
+    
         android:label="favy_place"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyD0W-RcQ7FHd62Mz0qwOsSFyFSRroUgodA"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
