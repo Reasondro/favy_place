@@ -6,7 +6,9 @@ import 'package:location/location.dart';
 import 'package:http/http.dart' as http;
 
 class LocationInput extends StatefulWidget {
-  const LocationInput({super.key});
+  const LocationInput({super.key, required this.onPickLocation});
+
+  final void Function(PlaceLocation location) onPickLocation;
   @override
   State<StatefulWidget> createState() {
     return _LocationInputState();
@@ -25,7 +27,7 @@ class _LocationInputState extends State<LocationInput> {
     }
     final lat = _pickedLocation!.latitude;
     final lng = _pickedLocation!.longitude;
-    return 'https://maps.googleapis.com/maps/api/staticmap?center$lat,$lng=&zoom=16&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:X%7C$lat,$lng&key=$apiKey';
+    return 'https://maps.googleapis.com/maps/api/staticmap?center$lat,$lng=&zoom=16&size=700x900&maptype=roadmap&markers=color:yellow%7Clabel:X%7C$lat,$lng&key=$apiKey';
   }
 
   void _getCurrentLocation() async {
@@ -81,6 +83,8 @@ class _LocationInputState extends State<LocationInput> {
     setState(() {
       _isGettingLocation = false;
     });
+    widget.onPickLocation(
+        _pickedLocation!); //! needed for passing the location into the parent(not so parent) widget class PlacesScreen
   }
 
   @override

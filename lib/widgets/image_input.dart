@@ -33,7 +33,7 @@ class _ImageInputState extends State<ImageInput> {
       _selectedImage = File(pickedImage
           .path); //*IMPORTANT to set the image path from the picked image
     });
-    widget.onPickImage(_selectedImage!);
+    widget.onPickImage(_selectedImage!); //! needed for passing the image into the parent(not so parent) widget class PlacesScreen
   }
 
   @override
