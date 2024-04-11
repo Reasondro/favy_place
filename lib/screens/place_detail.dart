@@ -1,5 +1,7 @@
 import 'package:favy_place/models/place.dart';
+import 'package:favy_place/screens/map.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class PlaceDetailScreen extends StatelessWidget {
   const PlaceDetailScreen({super.key, required this.place});
@@ -15,6 +17,17 @@ class PlaceDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void openMap() {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => MapScreen(
+            location: place.location,
+            isSelecting: false,
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: Text(place.title),
@@ -33,9 +46,14 @@ class PlaceDetailScreen extends StatelessWidget {
                 right: 0,
                 child: Column(
                   children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: NetworkImage(locationImage),
+                    GestureDetector(
+                      onTap: () {
+                        openMap();
+                      },
+                      child: CircleAvatar(
+                        radius: 60,
+                        backgroundImage: NetworkImage(locationImage),
+                      ),
                     ),
                     const SizedBox(
                       height: 16,

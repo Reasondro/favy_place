@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:favy_place/models/place.dart';
+import 'package:favy_place/screens/map.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:http/http.dart' as http;
 
@@ -30,7 +32,26 @@ class _LocationInputState extends State<LocationInput> {
     return 'https://maps.googleapis.com/maps/api/staticmap?center$lat,$lng=&zoom=16&size=700x900&maptype=roadmap&markers=color:yellow%7Clabel:X%7C$lat,$lng&key=$apiKey';
   }
 
-  void _getCurrentLocation() async {
+  Future<void> _savePlace(double latitude, double longitude) async {
+    final url = Uri.parse(
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$apiKey'); //* reverse geocoding
+    final response =
+        await http.get(url); //! need to put await here to get the body
+
+    final resData = json.decode(response.body);
+
+    final address = resData['results'][0]['formatted_address'];
+    _pickedLocation = PlaceLocation(
+        latitude: latitude, longitude: longitude, address: address);
+    //* use ! ! here because we already know lat & lng won't be null
+    setState(() {
+      _isGettingLocation = false;
+    });
+    widget.onPickLocation(
+        _pickedLocation!); //! needed for passing the location into the parent(not so parent) widget class PlacesScreen
+  }
+
+  Future<void> _getCurrentLocation() async {
     Location location = Location();
 
     bool serviceEnabled;
@@ -61,30 +82,29 @@ class _LocationInputState extends State<LocationInput> {
     //? easter egg, default location is Google HQ in SF
     // print(locationData.latitude);
     // print(locationData.longitude);
-    final lat = locationData.latitude;
-    final lng = locationData.longitude;
+    final latitude = locationData.latitude;
+    final longitude = locationData.longitude;
 
-    if (lat == null || lng == null) {
+    if (latitude == null || longitude == null) {
       //todo show an error
       return;
     }
+    _savePlace(
+        latitude, longitude); //! final step needed to save the place itself
+  }
 
-    final url = Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$apiKey'); //* reverse geocoding
-    final response =
-        await http.get(url); //! need to put await here to get the body
+  Future<void> _selectOnMap() async {
+    //* void and Future<void> are basically the same, just to keep me mind that async always return a future
+    final LatLng? selectedLocation = await Navigator.of(context).push<LatLng>(
+      MaterialPageRoute(
+        builder: (ctx) => const MapScreen(),
+      ),
+    );
 
-    final resData = json.decode(response.body);
-
-    final address = resData['results'][0]['formatted_address'];
-    _pickedLocation =
-        PlaceLocation(latitude: lat, longitude: lng, address: address);
-    //* use ! ! here because we already know lat & lng won't be null
-    setState(() {
-      _isGettingLocation = false;
-    });
-    widget.onPickLocation(
-        _pickedLocation!); //! needed for passing the location into the parent(not so parent) widget class PlacesScreen
+    if (selectedLocation == null) {
+      return;
+    }
+    _savePlace(selectedLocation.latitude, selectedLocation.longitude);
   }
 
   @override
@@ -131,7 +151,9 @@ class _LocationInputState extends State<LocationInput> {
                 icon: const Icon(Icons.location_on),
                 label: const Text("Get Current Location")),
             TextButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  _selectOnMap();
+                },
                 icon: const Icon(Icons.map),
                 label: const Text("Select on Map"))
           ],
