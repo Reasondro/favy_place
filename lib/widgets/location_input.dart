@@ -104,6 +104,8 @@ class _LocationInputState extends State<LocationInput> {
     if (selectedLocation == null) {
       return;
     }
+    print(
+        "Latitude: ${selectedLocation.latitude} \nLongitude: ${selectedLocation.longitude}");
     _savePlace(selectedLocation.latitude, selectedLocation.longitude);
   }
 

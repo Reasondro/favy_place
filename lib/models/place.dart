@@ -14,11 +14,13 @@ class PlaceLocation {
 }
 
 class Place {
-  Place({
-    required this.title,
-    required this.image,
-    required this.location,
-  }) : id = uuid.v4();
+  Place(
+      {required this.title,
+      required this.image,
+      required this.location,
+      String? id})
+      : id = id ??
+            uuid.v4(); //* ternary on crack, if L.H is null then R.H will be used otherwise L.H will be used
 
   final String id;
   final String title;
