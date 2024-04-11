@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:favy_place/screens/places.dart';
 
 final colorScheme = ColorScheme.fromSeed(
-  brightness: Brightness.dark,
+  brightness: Brightness.light,
   seedColor: const Color.fromARGB(255, 135, 147, 255),
   // background: Color.fromARGB(255, 1, 11, 14),
 );
@@ -13,14 +13,14 @@ final colorScheme = ColorScheme.fromSeed(
 final theme = ThemeData().copyWith(
     scaffoldBackgroundColor: colorScheme.background,
     colorScheme: colorScheme,
-    textTheme: GoogleFonts.ubuntuCondensedTextTheme().copyWith(
-      titleSmall: GoogleFonts.ubuntuCondensed(
+    textTheme: GoogleFonts.zillaSlabTextTheme().copyWith(
+      titleSmall: GoogleFonts.zillaSlab(
         fontWeight: FontWeight.bold,
       ),
-      titleMedium: GoogleFonts.ubuntuCondensed(
+      titleMedium: GoogleFonts.zillaSlab(
         fontWeight: FontWeight.bold,
       ),
-      titleLarge: GoogleFonts.ubuntuCondensed(
+      titleLarge: GoogleFonts.zillaSlab(
         fontWeight: FontWeight.bold,
       ),
     ),
